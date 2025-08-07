@@ -62,11 +62,6 @@
       "name": "sig-{{user `build_name`}}",
       "os_disk_size_gb": "{{user `os_disk_size_gb`}}",
       "os_type": "Linux",
-      "plan_info": {
-        "plan_name": "{{user `plan_image_sku`}}",
-        "plan_product": "{{user `plan_image_offer`}}",
-        "plan_publisher": "{{user `plan_image_publisher`}}"
-      },
       "private_virtual_network_with_public_ip": "{{user `private_virtual_network_with_public_ip`}}",
       "public_ip_sku": "Standard",
       "shared_gallery_image_version_exclude_from_latest": "{{ user `exclude_from_latest` }}",
@@ -261,9 +256,6 @@
     "managed_image_storage_account_type": "{{user `storage_account_type`}}",
     "manifest_output": "manifest.json",
     "os_disk_size_gb": "",
-    "plan_image_offer": "",
-    "plan_image_publisher": "",
-    "plan_image_sku": "",
     "private_virtual_network_with_public_ip": "",
     "provisioner_remote_folder": "/tmp",
     "source_sig_image_name": "",
