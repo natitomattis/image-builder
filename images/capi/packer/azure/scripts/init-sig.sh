@@ -133,6 +133,7 @@ create_image_definition() {
       --publisher ${SIG_PUBLISHER:-capz} \
       --offer ${SIG_OFFER:-capz-demo} \
       --sku ${SIG_SKU:-$2} \
+      --architecture Arm64
       --hyper-v-generation ${3} \
       --os-type ${4} \
       --features ${5:-''} \
