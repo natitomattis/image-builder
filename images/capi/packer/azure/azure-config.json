@@ -7,3 +7,4 @@
   "use_azure_cli_auth": "{{env `USE_AZURE_CLI_AUTH`}}",
   "vm_size": "Standard_E2ps_v5"
 }
+
