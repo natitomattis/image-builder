@@ -23,10 +23,10 @@
     pypy_url_base: https://downloads.python.org/pypy
     pypy_url_path: pypy{{ pypy_python_version }}-v{{ pypy_version }}-{{ arch_label }}.tar.bz2
   block:
-    - setup:
-        filter: ansible_architecture
+    - raw: uname -m
+      register: arch_cmd
     - set_fact:
-        arch_label: "{{ 'aarch64' if ansible_architecture == 'aarch64' else 'linux64' }}"
+        arch_label: "{{ 'aarch64' if arch_cmd.stdout == 'aarch64' else 'linux64' }}"
     - name: Download pypy archive
       ansible.builtin.raw: curl {{ pypy_url_base }}/{{ pypy_url_path }} -L --output {{ pypy_download_path }}
     - name: Extract archive
