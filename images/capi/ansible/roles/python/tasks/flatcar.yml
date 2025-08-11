@@ -25,8 +25,14 @@
   block:
     - raw: uname -m
       register: arch_cmd
-    - set_fact:
-        arch_label: "{{ 'aarch64' if arch_cmd.stdout == 'aarch64' else 'linux64' }}"
+    - name: Normalize architecture
+      set_fact:
+        arch_label: >-
+          {{ 'aarch64' if arch_cmd.stdout in ['aarch64', 'arm64'] else
+             'linux64' if arch_cmd.stdout in ['x86_64', 'amd64'] else
+             arch_cmd.stdout }}
+    - debug:
+        msg: "{{ arch_cmd }}"
     - name: Download pypy archive
       ansible.builtin.raw: curl {{ pypy_url_base }}/{{ pypy_url_path }} -L --output {{ pypy_download_path }}
     - name: Extract archive
