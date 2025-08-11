@@ -23,6 +23,8 @@
     pypy_url_base: https://downloads.python.org/pypy
     pypy_url_path: pypy{{ pypy_python_version }}-v{{ pypy_version }}-{{ arch_label }}.tar.bz2
   block:
+    - setup:
+        filter: ansible_architecture
     - set_fact:
         arch_label: "{{ 'aarch64' if ansible_architecture == 'aarch64' else 'linux64' }}"
     - name: Download pypy archive
