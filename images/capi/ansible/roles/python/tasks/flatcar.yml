@@ -28,9 +28,9 @@
     - name: Normalize architecture
       set_fact:
         arch_label: >-
-          {{ 'aarch64' if arch_cmd.stdout in ['aarch64', 'arm64'] else
-             'linux64' if arch_cmd.stdout in ['x86_64', 'amd64'] else
-             arch_cmd.stdout }}
+          {{ 'aarch64' if arch_cmd.stdout_lines[0] in ['aarch64', 'arm64'] else
+             'linux64' if arch_cmd.stdout_lines[0] in ['x86_64', 'amd64'] else
+             arch_cmd.stdout_lines[0] }}
     - debug:
         msg: "{{ arch_cmd }}"
     - name: Download pypy archive
