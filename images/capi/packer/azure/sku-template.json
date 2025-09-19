@@ -20,6 +20,12 @@
   "microsoft-azure-corevm.migratedOffer": false,
   "microsoft-azure-corevm.operatingSystemFamily": "{{OS_FAMILY}}",
   "microsoft-azure-corevm.osType": "{{OS_TYPE}}",
+  "microsoft-azure-corevm.features": [
+      {
+        "name": "DiskControllerTypes",
+        "value": "NVMe,SCSI"
+      }
+  ],
   "microsoft-azure-corevm.privacyURL": "https://github.com/cncf/foundation/blob/master/copyright-notices.md",
   "microsoft-azure-corevm.skuDescriptionFairfax": "Base Image for building Kubernetes cluster on Azure with Cluster API. This image is not intended for use outside of https://github.com/kubernetes-sigs/cluster-api-provider-azure.",
   "microsoft-azure-corevm.skuDescriptionMooncake": "Base Image for building Kubernetes cluster on Azure with Cluster API. This image is not intended for use outside of https://github.com/kubernetes-sigs/cluster-api-provider-azure.",
