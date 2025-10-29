@@ -195,7 +195,7 @@ case ${SIG_TARGET} in
   ;;
   flatcar-gen2)
     SKU="flatcar-${FLATCAR_CHANNEL}-${FLATCAR_VERSION}-gen2"
-    create_image_definition "${SKU}" "${SKU}" "V2" "Linux"
+    create_image_definition "${SKU}" "${SKU}" "V2" "Linux" "DiskControllerTypes=SCSI,NVMe"
   ;;
   *)
     >&2 echo "Unsupported SIG target: '${SIG_TARGET}'"

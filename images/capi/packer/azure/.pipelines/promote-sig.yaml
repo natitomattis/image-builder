@@ -111,6 +111,7 @@ jobs:
             --offer ${SIG_OFFER} \
             --sku ${DISTRO} \
             --hyper-v-generation ${HYPERV_GEN} \
+            --features "DiskControllerTypes=SCSI,NVMe" \
             --os-type ${OS_TYPE} \
             | tee -a sig-publishing.json
         fi
