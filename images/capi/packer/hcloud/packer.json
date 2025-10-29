@@ -127,11 +127,9 @@
     "build_timestamp": "{{timestamp}}",
     "containerd_gvisor_runtime": "false",
     "containerd_gvisor_version": "latest",
-    "containerd_sha256": null,
-    "containerd_url": "https://github.com/containerd/containerd/releases/download/v{{user `containerd_version`}}/cri-containerd-cni-{{user `containerd_version`}}-linux-{{user `arch`}}.tar.gz",
+    "containerd_service_url": "https://raw.githubusercontent.com/containerd/containerd/refs/tags/v{{user `containerd_version`}}/containerd.service",
     "containerd_version": null,
     "containerd_wasm_shims_runtimes": null,
-    "crictl_url": null,
     "crictl_version": null,
     "direct_shared_gallery_image_id": "",
     "distribution": null,
@@ -158,6 +156,7 @@
     "kubernetes_semver": null,
     "kubernetes_series": null,
     "kubernetes_source_type": null,
-    "manifest_output": "manifest.json"
+    "manifest_output": "manifest.json",
+    "runc_version": null
   }
 }
