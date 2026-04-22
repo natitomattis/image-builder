@@ -48,7 +48,7 @@
     - ctr
     - crictl
     - critest
-  when: (ansible_os_family | default('')) != "Flatcar"
+  when: ansible_facts['os_family'] != "Flatcar"
 
 - ansible.builtin.import_tasks: url.yml
   when: kubernetes_source_type == "http" and kubernetes_cni_source_type == "http"
