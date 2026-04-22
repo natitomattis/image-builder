@@ -1,5 +1,6 @@
-# Use CDROM installation media
-repo --name="AppStream" --baseurl="http://download.rockylinux.org/pub/rocky/8/AppStream/x86_64/os/"
+# Use DVD installation media
+repo --name="BaseOS"    --baseurl=file:///run/install/repo/BaseOS
+repo --name="AppStream" --baseurl=file:///run/install/repo/AppStream
 cdrom
 
 # Use text install
@@ -32,11 +33,11 @@ services --enabled="NetworkManager,sshd,chronyd"
 # System timezone
 timezone UTC
 
-# System booloader configuration
+# System bootloader configuration
 bootloader --location=mbr --boot-drive=sda
 zerombr
 clearpart --all --initlabel --drives=sda
-part / --fstype="ext4" --grow --asprimary --label=slash --ondisk=sda
+autopart --nohome --noswap --nolvm
 
 skipx
 
