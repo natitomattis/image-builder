@@ -19,3 +19,12 @@
   loop: "{{ additional_registry_images_list.split(',') }}"
   retries: 5
   delay: 3
+
+- name: Pull additional images via crictl for K8s metadata registration
+  ansible.builtin.command: "{{ sysusr_prefix }}/bin/crictl --runtime-endpoint={{ containerd_cri_socket }} pull {{ item }}"
+  loop: "{{ additional_registry_images_list.split(',') }}"
+  register: crictl_pull_result
+  until: crictl_pull_result.rc == 0
+  retries: 5
+  delay: 3
+  changed_when: "'Image is up to date' not in crictl_pull_result.stdout"
