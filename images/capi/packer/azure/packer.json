@@ -78,6 +78,7 @@
         "resource_group": "{{user `resource_group_name`}}",
         "storage_account_type": "{{user `storage_account_type`}}"
       },
+      "ssh_handshake_attempts": "100",
       "ssh_username": "packer",
       "subscription_id": "{{user `subscription_id`}}",
       "type": "azure-arm",
