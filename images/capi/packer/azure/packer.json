@@ -79,6 +79,7 @@
         "storage_account_type": "{{user `storage_account_type`}}"
       },
       "ssh_handshake_attempts": "100",
+      "accelerated_networking": "{{user `accelerated_networking`}}",
       "ssh_username": "packer",
       "subscription_id": "{{user `subscription_id`}}",
       "type": "azure-arm",
@@ -205,6 +206,7 @@
     "ansible_scp_extra_args": "",
     "ansible_user_vars": "",
     "arch": "amd64",
+    "accelerated_networking": "false",
     "azure_location": null,
     "build_name": null,
     "build_resource_group_name": "{{ env `BUILD_RESOURCE_GROUP_NAME` }}",
