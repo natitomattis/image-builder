@@ -2,6 +2,17 @@
   "ignition": {
     "version": "3.4.0"
   },
+  "storage": {
+    "files": [
+      {
+        "path": "/etc/ssh/sshd_config.d/90-packer-provisioning.conf",
+        "contents": {
+          "inline": "ClientAliveInterval 0\nClientAliveCountMax 0\n"
+        },
+        "mode": 420
+      }
+    ]
+  },
   "systemd": {
     "units": [
       {
