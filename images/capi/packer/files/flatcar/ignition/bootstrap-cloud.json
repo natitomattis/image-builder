@@ -9,6 +9,10 @@
         "name": "docker.service"
       },
       {
+        "mask": true,
+        "name": "sshd.socket"
+      },
+      {
         "enabled": true,
         "name": "sshd.service"
       },
