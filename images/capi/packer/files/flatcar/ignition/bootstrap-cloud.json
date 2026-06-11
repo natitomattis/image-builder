@@ -2,17 +2,6 @@
   "ignition": {
     "version": "3.4.0"
   },
-  "storage": {
-    "files": [
-      {
-        "path": "/etc/ssh/sshd_config.d/90-packer-provisioning.conf",
-        "contents": {
-          "inline": "ClientAliveInterval 0\nClientAliveCountMax 0\n"
-        },
-        "mode": 420
-      }
-    ]
-  },
   "systemd": {
     "units": [
       {
@@ -26,6 +15,11 @@
       {
         "enabled": true,
         "name": "sshd.service"
+      },
+      {
+        "enabled": true,
+        "name": "sshd-packer-config.service",
+        "contents": "[Unit]\nDescription=Write sshd config for packer provisioning\nBefore=sshd.service\nAfter=local-fs.target\nDefaultDependencies=no\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/bin/bash -c 'mkdir -p /etc/ssh/sshd_config.d && printf \"ClientAliveInterval 0\\nClientAliveCountMax 0\\n\" > /etc/ssh/sshd_config.d/90-packer-provisioning.conf'\n\n[Install]\nWantedBy=multi-user.target"
       },
       {
         "mask": true,
