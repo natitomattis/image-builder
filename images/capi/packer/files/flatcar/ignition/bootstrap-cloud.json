@@ -10,6 +10,14 @@
       },
       {
         "mask": true,
+        "name": "sshd.socket"
+      },
+      {
+        "enabled": true,
+        "name": "sshd.service"
+      },
+      {
+        "mask": true,
         "name": "update-engine.service"
       },
       {
