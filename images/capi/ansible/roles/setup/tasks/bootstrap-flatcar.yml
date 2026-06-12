@@ -12,7 +12,7 @@
 
 - name: Set the ansible_python_interpreter fact
   ansible.builtin.set_fact:
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: "{{ external_binary_path }}/python"
   tags:
     - facts
 

@@ -10,29 +10,11 @@
       },
       {
         "mask": true,
-        "name": "sshd.socket"
-      },
-      {
-        "enabled": true,
-        "name": "sshd.service"
-      },
-      {
-        "enabled": true,
-        "name": "sshd-packer-config.service",
-        "contents": "[Unit]\nDescription=Write sshd config for packer provisioning\nBefore=sshd.service\nAfter=local-fs.target\nDefaultDependencies=no\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/bin/bash -c 'mkdir -p /etc/ssh/sshd_config.d && printf \"ClientAliveInterval 0\\nClientAliveCountMax 0\\n\" > /etc/ssh/sshd_config.d/90-packer-provisioning.conf'\n\n[Install]\nWantedBy=multi-user.target"
-      },
-      {
-        "mask": true,
         "name": "update-engine.service"
       },
       {
         "mask": true,
         "name": "locksmithd.service"
-      },
-      {
-        "enabled": true,
-        "name": "unbind-sriov-vf.service",
-        "contents": "[Unit]\nDescription=Unbind SR-IOV VF to prevent data path switching during provisioning\nBefore=sshd.service\nAfter=network.target\nDefaultDependencies=no\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/bin/bash -c 'for dev in /sys/bus/pci/drivers/mlx5_core/????:??:??.?; do [ -e \"$dev\" ] && echo \"$(basename $dev)\" > /sys/bus/pci/drivers/mlx5_core/unbind || true; done'\n\n[Install]\nWantedBy=multi-user.target"
       }
     ]
   }
