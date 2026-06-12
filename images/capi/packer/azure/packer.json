@@ -130,6 +130,7 @@
       ],
       "playbook_file": "./ansible/python.yml",
       "type": "ansible",
+      "use_proxy": false,
       "user": "packer"
     },
     {
@@ -148,6 +149,7 @@
       ],
       "playbook_file": "./ansible/node.yml",
       "type": "ansible",
+      "use_proxy": false,
       "user": "packer"
     },
     {
