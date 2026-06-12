@@ -69,6 +69,7 @@ create_image_definition() {
       --offer ${SIG_OFFER:-capz-demo} \
       --sku ${SIG_SKU:-$2} \
       --hyper-v-generation ${3} \
+      --architecture ${SIG_ARCHITECTURE:-x64} \
       --os-type ${4} \
       --features ${5:-''}
   fi
@@ -125,7 +126,7 @@ case ${SIG_TARGET} in
   ;;
   flatcar-gen2)
     SKU="flatcar-${FLATCAR_CHANNEL}-${FLATCAR_VERSION}-gen2"
-    create_image_definition "${SKU}" "${SKU}" "V2" "Linux"
+    create_image_definition "${SKU}" "${SKU}" "V2" "Linux" "DiskControllerTypes=SCSI,NVMe"
   ;;
   *)
     >&2 echo "Unsupported SIG target: '${SIG_TARGET}'"
