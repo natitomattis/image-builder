@@ -20,6 +20,10 @@
   ansible.builtin.import_tasks: amazonLinux.yml
   when: ansible_facts['distribution'] == "Amazon"
 
+- name: Import Debian node tasks
+  ansible.builtin.import_tasks: debian.yml
+  when: ansible_facts['os_family'] == "Debian"
+
 - name: Override Flatcar's OS family
   ansible.builtin.set_fact:
     ansible_os_family: ansible_facts['os_family']
@@ -92,7 +96,7 @@
     name: conntrackd
     state: stopped
     enabled: false
-  when: ansible_facts['os_family'] not in ["Common Base Linux Mariner", "Debian", "Flatcar", "Microsoft Azure Linux"]
+  when: ansible_facts['os_family'] not in ["Debian", "Flatcar", "Microsoft Azure Linux"]
 
 - name: Ensure auditd is running and comes on at reboot
   ansible.builtin.service:
@@ -137,3 +141,16 @@
     src: usr/local/bin/etcd-network-tuning.sh
     dest: "{{ external_binary_path }}/etcd-network-tuning.sh"
     mode: "0755"
+
+- name: Write image-builder provenance file
+  ansible.builtin.copy:
+    dest: /etc/image-builder-release
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      IMAGE_BUILDER_VERSION={{ image_builder_version | default('') }}
+      IMAGE_BUILDER_COMMIT={{ image_builder_commit | default('') }}
+      KUBERNETES_VERSION={{ kubernetes_semver | default('') }}
+      BUILD_DATE={{ now(utc=true, fmt='%Y-%m-%dT%H:%M:%SZ') }}
+  when: (image_builder_version | default('')) | length > 0 or (image_builder_commit | default('')) | length > 0

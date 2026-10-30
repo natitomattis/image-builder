@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # Note: ansible-core v2.18 supports Python 3.11-3.13.
-_version_ansible_core="2.18.16"
+_version_ansible_core="2.18.18"
 
 case "${OSTYPE}" in
 linux*)
@@ -117,6 +117,44 @@ pip3_install() {
     >&2 echo "$output"
     exit 1
   fi
+}
+
+galaxy_collection_install() {
+  # Wrapper around "ansible-galaxy collection install" that retries on
+  # transient Galaxy API failures, for example the HTTP 502/503/504 responses
+  # galaxy.ansible.com returns while it is degraded. All arguments are passed
+  # through to ansible-galaxy unchanged.
+  #
+  # Tunables:
+  #   GALAXY_INSTALL_RETRIES          total number of attempts (default 5)
+  #   GALAXY_INSTALL_RETRY_DELAY      seconds to sleep before retry 2 (default 5)
+  #   GALAXY_INSTALL_RETRY_MAX_DELAY  upper bound for the backoff (default 40)
+  #   GALAXY_INSTALL_TIMEOUT          per-request timeout in seconds (default 60)
+  local attempts="${GALAXY_INSTALL_RETRIES:-5}"
+  local delay="${GALAXY_INSTALL_RETRY_DELAY:-5}"
+  local max_delay="${GALAXY_INSTALL_RETRY_MAX_DELAY:-40}"
+  local request_timeout="${GALAXY_INSTALL_TIMEOUT:-60}"
+  local attempt=1
+  local rc=0
+
+  while true; do
+    rc=0
+    ansible-galaxy collection install --timeout "${request_timeout}" "${@}" || rc=$?
+    if [ "${rc}" -eq 0 ]; then
+      return 0
+    fi
+    if [ "${attempt}" -ge "${attempts}" ]; then
+      echo "ansible-galaxy collection install failed after ${attempt} attempt(s), last exit code ${rc}" 1>&2
+      return "${rc}"
+    fi
+    echo "ansible-galaxy collection install attempt ${attempt}/${attempts} failed with exit code ${rc}, retrying in ${delay}s" 1>&2
+    sleep "${delay}"
+    attempt=$((attempt + 1))
+    delay=$((delay * 2))
+    if [ "${delay}" -gt "${max_delay}" ]; then
+      delay="${max_delay}"
+    fi
+  done
 }
 
 hostarch_without_darwin_arm64() {
